@@ -1,3 +1,7 @@
-import { Express } from "express";
+import { Router } from 'express'
+import * as adminController from '../controllers/admin.controller'
+const router = Router()
 
-//GET request to verify the submission form send by the members
+router.get('/dashboard', adminController.dashboard)
+
+export default router
