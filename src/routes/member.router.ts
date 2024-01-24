@@ -1,10 +1,9 @@
 import express from 'express'
 import * as memberController from '../controllers/member.controller'
-import * as memberValidator from '../validator/member.validator'
+import  {memberValidator} from '../validator/member.validator'
 import { validate } from '../utils/validate'
 
 const router = express.Router()
 
 router.post('/register',validate(memberValidator), memberController.createMember)
-// router.post('/register', memberController.createMember)
 export default router

@@ -4,11 +4,11 @@ export const memberValidator = z.object({
         projectname: z.string({
             required_error: 'project name is required',
         }),
-        Teamname: z.string({
-            required_error: 'Teamname is required',
+        teamname: z.string({
+            required_error: 'teamname is required',
         }),
         faculty: z.string({
-            required_error: 'Faculty is required',
+            required_error: 'faculty is required',
         }),
         semester: z.string({
             required_error: 'semester is required',
