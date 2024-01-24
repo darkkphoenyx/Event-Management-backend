@@ -1,3 +1,3 @@
-#This is steps for setting up environments for node
+#This is a spectacular project for Event Management
 <br>
-#Author: deepesh
+#Team: Backend team
