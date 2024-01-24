@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Team{
+  id               Int  @id @default(autoincrement())
+  teamName         String
+  faculty          String
+  semester         Int
+  projectID        Int   //link to project table
+  valid_token      Int
+} 
+
+model project{
+  id               Int @id @default(autoincrement())
+  title            String
+  description      String
+}
+
+model members{
+  id               Int @id @default(autoincrement())
+  name             String
+  team_id          Int   //link to team table
+}
+
+model coupen{
+  id                Int @id @default(autoincrement())
+  otp               String @default("")
+  qty               Int  //no of members in members table
+  is_valid          Boolean @default(true)
+}
+
+model bill{
+  id                Int @id  @default(autoincrement())
+  team_Id           Int //link to  team table
+  tokenValue        String
+}

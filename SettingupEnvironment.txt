@@ -1,0 +1,24 @@
+npm init
+npm install express
+-----in dependencies----
+
+
+npm install -D nodemon typescript ts-node
+npm install -D @types/express	
+npm install -D eslint prettier eslint-config-prettier
+npm install -D @typescript-eslint/eslint-plugin @typescript-eslint/parser
+-----in dev dependencie-----
+
+write these code in package.json/script
+	"dev": "nodemon ./src/main.ts",
+ 	"format": "prettier --write",
+        "lint-fix": "eslint --ignore-path .eslintigonore . --fix"
+
+install 
+npm install @prisma/client --- in dependencies
+npm install -D prisma --- in devDependencies
+npx prisma init --datasource-provider postgresql
+ npx prisma generate
+ ---to sync prisma and database---
+ npx prisma migrate dev -- to sync database to pgadmin
+ default username for postgres is postgres
