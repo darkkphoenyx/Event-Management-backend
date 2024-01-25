@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 import * as adminService from '../services/admin.service'
-<<<<<<< HEAD
-import { Request,Response,NextFunction } from 'express'
+
 import {loginBodyDTO} from '../validator/loginvalidator'
 
 
@@ -25,7 +24,6 @@ next(error)
 }
 
 
-=======
 
 export const dashboard = async (
     req: Request,
@@ -40,4 +38,3 @@ export const dashboard = async (
         next(err)
     }
 }
->>>>>>> 914c8dd67ec7d4e964d7a0f357847a5c53e27933
