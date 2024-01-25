@@ -3,10 +3,12 @@ import memberRouter from './routes/member.router'
 import adminRouter from './routes/member.router'
 import HttpStatus from 'http-status-codes'
 import buildError from './utils/build-errors'
+import cors from 'cors'
 const app = express()
 
 app.use(express.json())
 
+app.use(cors())
 const PORT = 3000
 app.listen(PORT, () =>
     console.log(`Server ready at: https://localhost:${PORT}`)
