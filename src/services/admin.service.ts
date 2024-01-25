@@ -2,6 +2,8 @@ import { Prisma, PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 import { createAccessToken,createRefreshToken } from '../utils/token.util'
 import  Boom  from '@hapi/boom'
+import bcrypt from 'bcryptjs';
+
 
 export const getDashboard = async () => {
     const teams = await prisma.team.findMany({
@@ -13,6 +15,7 @@ export const getDashboard = async () => {
             projectID: true,
         },
     })
+
 
     const projects = await Promise.all(
         teams.map(async (team) => {
@@ -38,12 +41,21 @@ export const getDashboard = async () => {
         })
     )
     return projects
-}
+    }
 
 
-export async function login(userName: string, password: string, ) {
-    const user = await prisma.admin.findFirst({ where: { userName} })
+
+
+
+
+    
+
+
+export async function login(userName: string, password: string ) {
+    const user = await prisma.admin.findFirst({ where: { userName:userName} })
+    console.log('second');
     if (!user) {
+        console.log('hello');
         throw Boom.badRequest('Username or password is incorrect.')
     }
 
@@ -55,9 +67,11 @@ export async function login(userName: string, password: string, ) {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+   
     const accessToken = createAccessToken(userName)
 
     const refreshToken = createRefreshToken(userName)
 
     return { accessToken, refreshToken }
+    
 }

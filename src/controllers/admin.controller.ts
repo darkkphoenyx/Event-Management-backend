@@ -9,10 +9,10 @@ export const login =async(req:Request,res:Response,next:NextFunction
   
   )=>{try{
 
-  const { username, password } = loginBodyDTO.parse(req.body)
+  const { userName, password } = loginBodyDTO.parse(req.body)
 
 const { accessToken, refreshToken } = await adminService.login(
-    username,
+    userName,
     password
 )
 res.cookie('refreshToken', refreshToken, {

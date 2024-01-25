@@ -1,10 +1,10 @@
 import * as jwt from 'jsonwebtoken'
 
 // export const createAccessToken = ( username: "admin") => {
-    export const createAccessToken = ( username: string) => {
+    export const createAccessToken = ( userName: string) => {
     return jwt.sign(
-        { username },
-        process.env.ACCESS_TOKEN_SECRET as string, 
+        { userName },
+        process.env.JWT_ACCESS_TOKEN_SECRET as string, 
       {
             expiresIn: '1hr',
         }
@@ -12,10 +12,10 @@ import * as jwt from 'jsonwebtoken'
 }
 
 // export const createRefreshToken = ( username:"admin") => {
-    export const createRefreshToken = ( username:string) => {
+    export const createRefreshToken = ( userName:string) => {
     return jwt.sign(
-        { username},
-        process.env.REFRESH_TOKEN_SECRET as string,
+        { userName},
+        process.env.JWT_REFRESH_TOKEN_SECRET as string,
         {
             expiresIn: '1d',
         }
