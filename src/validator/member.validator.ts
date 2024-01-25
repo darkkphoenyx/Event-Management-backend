@@ -17,7 +17,7 @@ export const memberValidator = z.object({
             required_error: 'e-mail is required',
         }),
 
-        description: z.string().nullable(),
+        description: z.string().optional(),
     }),
 })
 

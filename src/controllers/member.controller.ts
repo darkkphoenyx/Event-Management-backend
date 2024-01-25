@@ -8,12 +8,12 @@ export const createMember = async (
     next: NextFunction
 ) => {
     try {
-        const user = await memberService.postMember(req.body)
+        const user = await memberService.postMember(req.body )
         const response = {
             message: 'Member added successfully',
             user: user,
         }
-        console.log("this is error")
+
         return res.status(HttpStatusCode.CREATED).json(response)
       
     } catch (e) {
