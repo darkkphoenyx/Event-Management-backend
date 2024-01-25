@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Request, Response, NextFunction } from 'express'
 import * as adminService from '../services/admin.service'
@@ -16,7 +17,7 @@ export const dashboard = async (
     }
 }
 
-//get request status 
+//get status by admin 
 export const getStatus=async(
     req: Request,
     res: Response,
@@ -32,7 +33,7 @@ export const getStatus=async(
     }
 }
 
-//send verification status
+//to verify status by admin
 export const sendVerification=async(
     req: Request,
     res: Response,
@@ -47,5 +48,20 @@ export const sendVerification=async(
         next(error)
     }
     
+}
+//display status-verified to admin 
+export const displayVerified=async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+)=> {
+    try {
+      const response = await adminService.getVerified();
+      console.log("Request is being verified by admin")
+      res.json(response)
+    } 
+    catch (error) {
+      next(error)
+    }
 }
   

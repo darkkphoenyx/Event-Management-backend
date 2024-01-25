@@ -40,7 +40,7 @@ export const getDashboard = async () => {
     )
     return projects
 }
-//get request from user
+//get status-pending by admin 
 export const getRequest= async() => {
     // Check if the user ID exists in the Database
     try{
@@ -51,7 +51,7 @@ export const getRequest= async() => {
     }catch(err:any){
         if (err.code==='P2025')
         {
-            throw Boom.notFound("No any form submitted yet.")        
+            throw Boom.notFound("No any forms submitted yet.")        
         }
         else{
             throw err
@@ -59,7 +59,7 @@ export const getRequest= async() => {
     }
 }
 
-//request is verified by admin
+//update status to verified by admin
 export const verify = async (id: number) => {
     try {
         const updatedTeam = await prisma.team.update({
@@ -70,8 +70,7 @@ export const verify = async (id: number) => {
         });
         return updatedTeam;
     } catch (error:any) {
-        // console.log(`Error updating team status: ${error.message}`);
-        // throw error; // Rethrow the error to handle it elsewhere if needed
+        
         if (error.code==='P2025')
         {
             throw Boom.notFound("update error")
@@ -80,5 +79,22 @@ export const verify = async (id: number) => {
             throw error
         }
     }
-};
+}
+//display verified form
+export const getVerified= async() => {
+    try{
+    return await prisma.team.findMany({
+        where:{
+            status: "verified",
+        }});
+    }catch(err:any){
+        if (err.code==='P2025')
+        {
+            throw Boom.notFound("No any forms verified yet.")        
+        }
+        else{
+            throw err
+        }
+    }
+}
   
