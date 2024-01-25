@@ -7,14 +7,9 @@ export const createMember = async (
     res: Response,
     next: NextFunction
 ) => {
-    console.log('line no 10');
-    
     try {
-        const{teamName,faculty,semester,captainName,projectName, email,members,description} = req.body
-        console.log('line no 14');
-        
+        const{teamName,faculty,semester,captainName,projectName, email,members,description} = req.body;
         const team = await memberService.createTeam(teamName,faculty,semester,captainName, email,projectName,description)
-        console.log('line no 17');
         const member = await memberService.createMembers(team.id,members)
         const response = {
             message: 'Member added successfully',
