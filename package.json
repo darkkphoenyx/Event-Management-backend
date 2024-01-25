@@ -1,1 +1,44 @@
+<<<<<<< HEAD
 {"name":"typescript_starter","version":"1.0.0","description":"","main":"index.js","scripts":{"start":"nodemon ./src/main.ts","format":"prettier --write .","lint-fix":"eslint --ignore-path .eslintignore . --fix","deploy-migrate":"npx prisma migrate deploy && npm run start"},"author":"","license":"ISC","dependencies":{"@hapi/boom":"^10.0.1","@prisma/client":"^5.8.1","bcryptjs":"^2.4.3","express":"^4.18.2","http-status-codes":"^2.3.0","jsonwebtoken":"^9.0.2","zod":"^3.22.4"},"devDependencies":{"@types/bcryptjs":"^2.4.6","@types/express":"^4.17.21","@types/jsonwebtoken":"^9.0.5","@types/swagger-jsdoc":"^6.0.4","@types/swagger-ui-express":"^4.1.6","@typescript-eslint/eslint-plugin":"^6.18.1","@typescript-eslint/parser":"^6.18.1","eslint":"^8.56.0","eslint-config-prettier":"^9.1.0","http-status-codes":"^2.3.0","nodemon":"^3.0.2","prettier":"^3.1.1","prisma":"^5.8.0","ts-node":"^10.9.2","typescript":"^5.3.3"}}
+=======
+{
+    "name": "typescript_starter",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon ./src/main.ts",
+        "format": "prettier --write .",
+        "lint-fix": "eslint --ignore-path .eslintignore . --fix",
+        "deploy-migrate": "npx prisma migrate deploy && npm run start"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@hapi/boom": "^10.0.1",
+        "@prisma/client": "^5.8.0",
+        "bcryptjs": "^2.4.3",
+        "express": "^4.18.2",
+        "http-status-codes": "^2.3.0",
+        "jsonwebtoken": "^9.0.2",
+        "zod": "^3.22.4"
+    },
+    "devDependencies": {
+        "@types/bcryptjs": "^2.4.6",
+        "@types/express": "^4.17.21",
+        "@types/jsonwebtoken": "^9.0.5",
+        "@types/swagger-jsdoc": "^6.0.4",
+        "@types/swagger-ui-express": "^4.1.6",
+        "@typescript-eslint/eslint-plugin": "^6.18.1",
+        "@typescript-eslint/parser": "^6.18.1",
+        "eslint": "^8.56.0",
+        "eslint-config-prettier": "^9.1.0",
+        "http-status-codes": "^2.3.0",
+        "nodemon": "^3.0.2",
+        "prettier": "^3.1.1",
+        "prisma": "^5.8.0",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.3.3"
+    }
+}
+>>>>>>> 914c8dd67ec7d4e964d7a0f357847a5c53e27933
