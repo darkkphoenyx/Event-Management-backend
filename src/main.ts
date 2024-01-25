@@ -1,6 +1,6 @@
 import express from 'express'
 import memberRouter from './routes/member.router'
-import adminRouter from './routes/member.router'
+import adminRouter from './routes/admin.router'
 
 const app = express()
 
