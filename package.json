@@ -12,14 +12,12 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@faker-js/faker": "^8.3.1",
         "@hapi/boom": "^10.0.1",
         "@prisma/client": "^5.8.0",
         "bcryptjs": "^2.4.3",
         "express": "^4.18.2",
+        "http-status-codes": "^2.3.0",
         "jsonwebtoken": "^9.0.2",
-        "swagger-jsdoc": "^6.2.8",
-        "swagger-ui-express": "^5.0.0",
         "zod": "^3.22.4"
     },
     "devDependencies": {
