@@ -11,16 +11,16 @@ datasource db {
 }
 
 model Team {
-  id          Int       @id @default(autoincrement())
-  teamName    String
-  faculty     String
-  semester    Int
-  projectID   project   @relation(fields: [projectId], references: [id])
-  valid_token Int
-  projectId   Int
-  members     members[]
-  bill        bill[]
-  coupon      coupon[]
+  id        Int       @id @default(autoincrement())
+  teamName  String
+  faculty   String
+  semester  Int
+  projectID project   @relation(fields: [projectId], references: [id])
+  status    String    @default("Pending")
+  projectId Int
+  members   members[]
+  bill      bill[]
+  coupon    coupon[]
 }
 
 model project {
@@ -46,8 +46,8 @@ model coupon {
 }
 
 model bill {
-  id         Int    @id @default(autoincrement())
-  team_Id    Team   @relation(fields: [teamId], references: [id])
-  tokenValue Int @default(50)
+  id         Int  @id @default(autoincrement())
+  team_Id    Team @relation(fields: [teamId], references: [id])
+  tokenValue Int  @default(50)
   teamId     Int
 }
