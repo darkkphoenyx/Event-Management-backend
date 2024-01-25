@@ -25,6 +25,12 @@ model Team {
   coupon      coupon[]
 }
 
+model admin {
+  id       Int    @id @default(autoincrement())
+  userName String
+  password String
+}
+
 model project {
   id          Int    @id @default(autoincrement())
   title       String
