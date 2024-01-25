@@ -6,6 +6,7 @@ import HttpStatus from 'http-status-codes'
 
 
 
+
 const app = express()
 
 app.use(express.json())
@@ -18,10 +19,6 @@ app.listen(PORT, () =>
 app.use('/todos', memberRouter)
 app.use('/admin', adminRouter)
 
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-    const error = buildError(err)
-    res.status(error.code).json({ error })
-})
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
     res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
