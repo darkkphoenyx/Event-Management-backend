@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { PrismaClient } from '@prisma/client'
-import  Boom  from '@hapi/boom'
+import Boom from '@hapi/boom'
 const prisma = new PrismaClient()
 
 export const getDashboard = async () => {
@@ -41,19 +41,18 @@ export const getDashboard = async () => {
     return projects
 }
 //get request from user
-export const getRequest= async() => {
+export const getRequest = async () => {
     // Check if the user ID exists in the Database
-    try{
-    return await prisma.team.findMany({
-        where:{
-            status: "pending",
-        }});
-    }catch(err:any){
-        if (err.code==='P2025')
-        {
-            throw Boom.notFound("No any form submitted yet.")        
-        }
-        else{
+    try {
+        return await prisma.team.findMany({
+            where: {
+                status: 'pending',
+            },
+        })
+    } catch (err: any) {
+        if (err.code === 'P2025') {
+            throw Boom.notFound('No any form submitted yet.')
+        } else {
             throw err
         }
     }
@@ -63,22 +62,19 @@ export const getRequest= async() => {
 export const verify = async (id: number) => {
     try {
         const updatedTeam = await prisma.team.update({
-            where: { id:Number(id)},
+            where: { id: Number(id) },
             data: {
-                status: "verified",
+                status: 'verified',
             },
-        });
-        return updatedTeam;
-    } catch (error:any) {
+        })
+        return updatedTeam
+    } catch (error: any) {
         // console.log(`Error updating team status: ${error.message}`);
         // throw error; // Rethrow the error to handle it elsewhere if needed
-        if (error.code==='P2025')
-        {
-            throw Boom.notFound("update error")
-        }
-        else{
+        if (error.code === 'P2025') {
+            throw Boom.notFound('update error')
+        } else {
             throw error
         }
     }
-};
-  
+}

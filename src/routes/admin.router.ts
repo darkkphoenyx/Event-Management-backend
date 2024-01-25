@@ -5,8 +5,8 @@ const router = Router()
 
 router.get('/dashboard', adminController.dashboard)
 
-router.get('/dashboard/status',adminController.getStatus)
+router.get('/dashboard/status', adminController.getStatus)
 
-router.put('/dashboard/verification/:id',adminController.sendVerification)
+router.put('/dashboard/verification/:id', adminController.sendVerification)
 
 export default router
