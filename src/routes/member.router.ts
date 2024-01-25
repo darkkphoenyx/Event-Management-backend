@@ -5,5 +5,6 @@ import { validate } from '../utils/validate'
 
 const router = express.Router()
 
-router.post('/register',validate(memberValidator), memberController.createMember)
+router.post('/register', validate(memberValidator),memberController.createMember)
+
 export default router

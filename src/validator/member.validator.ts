@@ -1,24 +1,27 @@
 import { z } from 'zod'
-export const memberValidator = z.object({
-    body: z.object({
-        projectname: z.string({
-            required_error: 'project name is required',
+   export const memberValidator = z.object({
+        body: z.object({
+            teamName: z.string({
+                required_error: 'teamName is required',
+            }),
+            faculty: z.string({
+                required_error: 'faculty is required',
+            }),
+            projectName: z.string({
+                required_error: 'projectName is required',
+            }),
+            semester: z.number({
+                required_error: 'semester is required',
+            }),
+            email: z.string({
+                required_error: "email is required",
+            }),
+            captainName: z.string({
+                required_error: 'captainName is required',
+            }),
+            member:z.array(z.string({
+                required_error: "member name should be string array"
+            })),
+            description: z.string().optional(),
         }),
-        teamname: z.string({
-            required_error: 'teamname is required',
-        }),
-        faculty: z.string({
-            required_error: 'faculty is required',
-        }),
-        semester: z.string({
-            required_error: 'semester is required',
-        }),
-        email: z.string({
-            required_error: 'e-mail is required',
-        }),
-
-        description: z.string().optional(),
-    }),
-})
-
-
+    })

@@ -4,10 +4,21 @@ CREATE TABLE "Team" (
     "teamName" TEXT NOT NULL,
     "faculty" TEXT NOT NULL,
     "semester" INTEGER NOT NULL,
-    "valid_token" INTEGER NOT NULL,
+    "captainName" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "status" TEXT NOT NULL DEFAULT 'Pending',
     "projectId" INTEGER NOT NULL,
 
     CONSTRAINT "Team_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "admin" (
+    "id" SERIAL NOT NULL,
+    "userName" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+
+    CONSTRAINT "admin_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
