@@ -22,17 +22,4 @@ export function authenticateToken(
     } catch (error) {
         throw Boom.unauthorized('User is not logged in')
     }
-}export function isAdmin(
-    req: RequestWithUserObject,
-    res: Response,
-    next: NextFunction
-) {
-    const { user } = req
-
-    if (user && user.isAdmin) {
-        console.log(user.isAdmin)
-        next()
-    } else {
-        throw Boom.forbidden('User is not an admin')
-    }
 }

@@ -1,5 +1,16 @@
 import { Prisma, PrismaClient } from '@prisma/client'
 import Boom from '@hapi/boom'
+import {
+    createAccessToken,
+    verifyRefreshToken,
+    verifyAccessToken,
+    createRefreshToken,
+} from '../utils/token.util'
+import * as dotenv from 'dotenv'
+dotenv.config();
+
+
+
 const prisma = new PrismaClient()
 
 export const getDashboard = async () => {
@@ -39,29 +50,24 @@ export const getDashboard = async () => {
     return projects
 }
 
-import {
-    createAccessToken,
-    verifyRefreshToken,
-    verifyAccessToken,
-    createRefreshToken,
-} from '../utils/token.util'
 
-//LOGIN
-export const login = async (username: string, password: string) => {
-    const adminUsername =process.env.ADMIN_USERNAME
-    if (adminUsername !== username) {
+
+export async function login(email: string, password: string) {
+    const user = await prisma.user.findFirst({ where: { email } })
+    if (!user) {
         throw Boom.badRequest('Username or password is incorrect.')
     }
 
-    const adminpassword = process.env.ADMIN_PASSWORD
+    const passwordMatch = await(password, user.password)
 
-    if (adminpassword!==password) {
+    if (!passwordMatch) {
         throw Boom.badRequest('Username or password is incorrect.')
     }
-    const accessToken = createAccessToken(username)
-    const refreshToken = createRefreshToken(username)
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const accessToken = createAccessToken(user.id, user.isAdmin)
+
+    const refreshToken = createRefreshToken(user.id, user.isAdmin)
 
     return { accessToken, refreshToken }
-
-
 }
