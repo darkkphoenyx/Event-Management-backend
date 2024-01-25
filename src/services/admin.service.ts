@@ -1,17 +1,7 @@
 import { Prisma, PrismaClient } from '@prisma/client'
-import Boom from '@hapi/boom'
-import {
-    createAccessToken,
-    verifyRefreshToken,
-    verifyAccessToken,
-    createRefreshToken,
-} from '../utils/token.util'
-import * as dotenv from 'dotenv'
-dotenv.config();
-
-
-
 const prisma = new PrismaClient()
+import { createAccessToken,createRefreshToken } from '../utils/token.util'
+import  Boom  from '@hapi/boom'
 
 export const getDashboard = async () => {
     const teams = await prisma.team.findMany({
@@ -51,23 +41,23 @@ export const getDashboard = async () => {
 }
 
 
-
-export async function login(email: string, password: string) {
-    const user = await prisma.user.findFirst({ where: { email } })
+export async function login(userName: string, password: string, ) {
+    const user = await prisma.admin.findFirst({ where: { userName} })
     if (!user) {
         throw Boom.badRequest('Username or password is incorrect.')
     }
 
-    const passwordMatch = await(password, user.password)
+    const passwordMatch = password === user.password;
+    console.log(passwordMatch);
 
     if (!passwordMatch) {
         throw Boom.badRequest('Username or password is incorrect.')
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const accessToken = createAccessToken(user.id, user.isAdmin)
+    const accessToken = createAccessToken(userName)
 
-    const refreshToken = createRefreshToken(user.id, user.isAdmin)
+    const refreshToken = createRefreshToken(userName)
 
     return { accessToken, refreshToken }
 }
