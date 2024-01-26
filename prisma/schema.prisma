@@ -16,7 +16,7 @@ model Team {
   faculty   String
   semester  Int
   projectID project   @relation(fields: [projectId], references: [id])
-  status    String    @default("Pending")
+  status    String?   @default("Pending")
   projectId Int
   members   members[]
   bill      bill[]

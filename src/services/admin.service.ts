@@ -1,4 +1,7 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { PrismaClient } from '@prisma/client'
+import  Boom  from '@hapi/boom'
 const prisma = new PrismaClient()
 
 export const getDashboard = async () => {
@@ -37,3 +40,61 @@ export const getDashboard = async () => {
     )
     return projects
 }
+//get status-pending by admin 
+export const getRequest= async() => {
+    // Check if the user ID exists in the Database
+    try{
+    return await prisma.team.findMany({
+        where:{
+            status: "pending",
+        }});
+    }catch(err:any){
+        if (err.code==='P2025')
+        {
+            throw Boom.notFound("No any forms submitted yet.")        
+        }
+        else{
+            throw err
+        }
+    }
+}
+
+//update status to verified by admin
+export const verify = async (id: number) => {
+    try {
+        const updatedTeam = await prisma.team.update({
+            where: { id:Number(id)},
+            data: {
+                status: "verified",
+            },
+        });
+        return updatedTeam;
+    } catch (error:any) {
+        
+        if (error.code==='P2025')
+        {
+            throw Boom.notFound("update error")
+        }
+        else{
+            throw error
+        }
+    }
+}
+//display verified form
+export const getVerified= async() => {
+    try{
+    return await prisma.team.findMany({
+        where:{
+            status: "verified",
+        }});
+    }catch(err:any){
+        if (err.code==='P2025')
+        {
+            throw Boom.notFound("No any forms verified yet.")        
+        }
+        else{
+            throw err
+        }
+    }
+}
+  
