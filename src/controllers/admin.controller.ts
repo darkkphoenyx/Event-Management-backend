@@ -1,11 +1,7 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-floating-promises */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Request, Response, NextFunction } from 'express'
 import * as adminService from '../services/admin.service'
+import qrcode from 'qrcode'
+import nodemailer from 'nodemailer'
 import path from 'path'
 export const dashboard = async (
     req: Request,
@@ -36,10 +32,36 @@ export const getStatus = async (
     }
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //send verification status
-import qrcode from 'qrcode'
-import nodemailer from 'nodemailer'
-// eslint-disable-next-line @typescript-eslint/require-await
 async function generateQRCode(
     data: string | qrcode.QRCodeSegment[],
     outputPath: string
@@ -61,13 +83,13 @@ async function sendEmail(
     const transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
-            user: 'xtmeopbadalund@gmail.com',
-            pass: 'ltnj nfrv poga yich',
+            user: 'eventmanagement.texas@gmail.com',
+            pass: 'tgvb ynwk xcol xlig',
         },
     })
 
     const mailOptions = {
-        from: 'xtmeopbadalund@gmail.com',
+        from: 'eventmanagement.texas@gmail.com',
         to: toEmail,
         subject: subject,
         text: text,
@@ -102,22 +124,16 @@ export const sendVerification = async (
     const { email } = response
     const paragraph = ` 
      TeamName : ${teamName} \n 
-     Dear ${captainName}, ${faculty}\n
+     Dear ${captainName}\n
+     Faculty: ${faculty}\n
      Semester : ${semester}\n
-      I trust this email finds you well, We appreciate your continued participation  in the Texas Expo. As a part of our ongoing commitment to security and  To ensure the accuracy and security of your Team information , we kindly    request to Check for verification process at your earliest convenience. This 
-      process is simple and should only take a few minutes of your time  request to Check for verification process at your earliest convenience. This process is simple and should only take a few minutes of your time \n
+      I trust this email finds you well, We appreciate your continued participation in the Texas Expo.\n
+      Your team has been verified successfully. 
+      Attached below is a QR for the canteen token for all your team members.
      
-     
-      Here are the steps to complete the verification : \n
+     Stall No: 
 
-      1. Click or dowload the following qr code
-      2. This will verify that you are At Expo Event and that you have Authroized to Canteen food.
-      We understand the importance of your time and assure you that this process is designed to enhance the security of your account and safeguard your sensitive information.\n
-    
-      Please do not hesitate to reach out to our dedicated support team at [Support Email/Phone Number]. We are here to assist you every step of the way.\n 
-
-      Thank you for your prompt attention to this matter. We value your trust and look forward to continuing to serve you.
-
+      
      Best regards,
 
 
@@ -130,7 +146,7 @@ export const sendVerification = async (
         await generateQRCode(formedString, outputImagePath)
         await sendEmail(
             email,
-            'QR CODE VERIFICATION',
+            'Team Verified',
             paragraph,
             outputImagePath
         )
