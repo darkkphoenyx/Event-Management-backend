@@ -4,7 +4,7 @@ import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 import { createAccessToken,createRefreshToken } from '../utils/token.util'
 import  Boom  from '@hapi/boom'
-import bcrypt from 'bcryptjs';
+
 
 
 export const getDashboard = async () => {
@@ -65,6 +65,7 @@ export const getRequest= async() => {
 //update status to verified by admin
 export const verify = async (id: number) => {
     try {
+
         const updatedTeam = await prisma.team.update({
             where: { id:Number(id)},
             data: {

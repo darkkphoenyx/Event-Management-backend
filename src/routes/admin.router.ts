@@ -9,6 +9,7 @@ const router = Router()
 
 
 router.post('/login',validate(loginSchema),adminController.login)
+
 //Display dashboard (all data)
 router.get('/dashboard', authenticateToken,adminController.dashboard)
 
@@ -17,6 +18,7 @@ router.get('/dashboard/status/pending',authenticateToken,adminController.getStat
 
 //Verification
 router.put('/dashboard/verify/:id',authenticateToken,adminController.sendVerification)
+
 //REJECT
 router.put('/dashboard/reject/:id',authenticateToken,adminController.rejectStatus)
 
