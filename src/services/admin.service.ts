@@ -8,7 +8,7 @@ export const getDashboard = async () => {
             teamName: true,
             faculty: true,
             semester: true,
-            projectID: true,
+            projectId: true,
         },
     })
 
@@ -16,7 +16,7 @@ export const getDashboard = async () => {
         teams.map(async (team) => {
             const project = await prisma.project.findFirst({
                 where: {
-                    id: team.projectID,
+                    id: team.projectId,
                 },
                 select: {
                     // Select the project fields you want
@@ -30,7 +30,7 @@ export const getDashboard = async () => {
                 teamName: team.teamName,
                 faculty: team.faculty,
                 semester: team.semester,
-                projectID: team.projectID,
+                projectID: team.projectId,
                 'project-name': project ? project.title : null,
             }
         })
