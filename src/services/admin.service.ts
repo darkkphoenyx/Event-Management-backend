@@ -2,8 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
+import cryptoRandomString from 'crypto-random-string'
 import { createAccessToken,createRefreshToken } from '../utils/token.util'
 import  Boom  from '@hapi/boom'
+import crypto from 'crypto'
 
 
 
@@ -62,16 +64,36 @@ export const getRequest= async() => {
     }
 }
 
+function generateOTP() {
+    const otpLength = 6;
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+    let otp = '';
+
+    for (let i = 0; i < otpLength; i++) {
+        const randomIndex = crypto.randomInt(characters.length);
+        otp += characters.charAt(randomIndex);
+    }
+
+    return otp;
+}
+
 //update status to verified by admin
 export const verify = async (id: number) => {
     try {
-
+        const newOTP = generateOTP()
         const updatedTeam = await prisma.team.update({
             where: { id:Number(id)},
             data: {
                 status: "verified",
             },
         });
+        await prisma.coupon.create({
+            data:{
+                teamId:id,
+                otp:newOTP
+            }
+        })
         return updatedTeam;
     } catch (error:any) {
         

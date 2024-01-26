@@ -11,7 +11,6 @@ export const login =async(req:Request,res:Response,next:NextFunction
   
   )=>{
     try{
-
     const { userName, password } = loginBodyDTO.parse(req.body)
     const { accessToken, refreshToken } = await adminService.login(
     userName,
