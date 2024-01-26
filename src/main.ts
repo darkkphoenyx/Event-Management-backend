@@ -1,32 +1,22 @@
 import express, { NextFunction, Request, Response } from 'express'
-import memberRouter from './routes/member.router'
-import adminRouter from './routes/member.router'
-import HttpStatus from 'http-status-codes'
-import buildError from './utils/build-errors'
-import cors from 'cors'
+
+import memberRoute from './routes/member.router'
+import buildError from './utils/build-error'
 const app = express()
 
 app.use(express.json())
 
-app.use(cors())
-const PORT = 3000
-app.listen(PORT, () =>
-    console.log(`Server ready at: https://localhost:${PORT}`)
-)
+const PORT = process.env.PORT || 3000
 
-app.use('/todos', memberRouter)
-app.use('/admin', adminRouter)
-
-app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
-    res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
-        error: {
-            code: HttpStatus.METHOD_NOT_ALLOWED,
-            message: HttpStatus.getStatusText(HttpStatus.METHOD_NOT_ALLOWED),
-        },
-    })
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`)
 })
+
+app.use('/members', memberRoute)
+
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const error = buildError(err)
     res.status(error.code).json({ error })
 })
+
 export default app
