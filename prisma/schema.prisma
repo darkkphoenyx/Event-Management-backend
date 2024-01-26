@@ -9,18 +9,25 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
-
 model Team {
-  id        Int       @id @default(autoincrement())
-  teamName  String
-  faculty   String
-  semester  Int
-  projectID project   @relation(fields: [projectId], references: [id])
-  status    String?   @default("Pending")
-  projectId Int
-  members   members[]
-  bill      bill[]
-  coupon    coupon[]
+  id          Int       @id @default(autoincrement())
+  teamName    String
+  faculty     String
+  semester    Int
+  captainName String
+  email       String
+  projectID   project   @relation(fields: [projectId], references: [id])
+  status      String    @default("Pending")
+  projectId   Int
+  members     members[]
+  bill        bill[]
+  coupon      coupon[]
+}
+
+model admin {
+  id       Int    @id @default(autoincrement())
+  userName String
+  password String
 }
 
 model project {

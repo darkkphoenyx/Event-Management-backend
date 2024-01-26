@@ -1,25 +1,22 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { NextFunction, Request, Response } from 'express'
-import memberRouter from './routes/member.router'
+// import memberRouter from './routes/member.router'
 import adminRouter from './routes/admin.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
 
-
-
-
 const app = express()
 
 app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 const PORT = 3000
 app.listen(PORT, () =>
     console.log(`Server ready at: https://localhost:${PORT}`)
 )
 
-app.use('/todos', memberRouter)
+// app.use('/todos', memberRouter)
 app.use('/admin', adminRouter)
-
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
     res.status(HttpStatus.METHOD_NOT_ALLOWED).json({

@@ -1,7 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { PrismaClient } from '@prisma/client'
 import Boom from '@hapi/boom'
+import { displayVerified } from '../controllers/admin.controller'
 const prisma = new PrismaClient()
 
 export const getDashboard = async () => {
@@ -12,6 +15,10 @@ export const getDashboard = async () => {
             faculty: true,
             semester: true,
             projectId: true,
+            email: true,
+            captainName: true,
+            status: true,
+            members: true,
         },
     })
 
@@ -35,6 +42,10 @@ export const getDashboard = async () => {
                 semester: team.semester,
                 projectID: team.projectId,
                 'project-name': project ? project.title : null,
+                email: team.email,
+                status: team.status,
+                captainName: team.captainName,
+                member: team.members,
             }
         })
     )
@@ -58,7 +69,7 @@ export const getRequest = async () => {
     }
 }
 
-//request is verified by admin
+//update status to verified by admin
 export const verify = async (id: number) => {
     try {
         const updatedTeam = await prisma.team.update({
@@ -75,6 +86,23 @@ export const verify = async (id: number) => {
             throw Boom.notFound('update error')
         } else {
             throw error
+        }
+    }
+}
+
+export const displayData = async () => {
+    try {
+        const displayVerifiedTeam = await prisma.team.findMany({
+            where: {
+                status: 'verified',
+            },
+        })
+        return displayVerifiedTeam
+    } catch (err: any) {
+        if (err.code === 'P2025') {
+            throw Boom.notFound('Could not find verified teams')
+        } else {
+            throw Error
         }
     }
 }

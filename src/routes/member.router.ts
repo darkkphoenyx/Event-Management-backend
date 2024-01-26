@@ -1,8 +1,8 @@
-import { Router } from 'express'
+// import { Router } from 'express'
 
-import * as memebrController from '../controllers/member.controller'
-const router = Router()
+// import * as memebrController from '../controllers/member.controller'
+// const router = Router()
 
-//FORM submission
-router.post('/', memebrController.submitForm)
-export default router
+// //FORM submission
+// router.post('/', memebrController.submitForm)
+// export default router
