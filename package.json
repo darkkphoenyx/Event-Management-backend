@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "dev": "nodemon ./src/main.ts",
         "start": "nodemon ./src/main.ts",
         "format": "prettier --write .",
         "lint-fix": "eslint --ignore-path .eslintignore . --fix",

@@ -1,4 +1,6 @@
-import { Prisma, PrismaClient } from '@prisma/client'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 import { createAccessToken,createRefreshToken } from '../utils/token.util'
 import  Boom  from '@hapi/boom'
@@ -12,6 +14,7 @@ export const getDashboard = async () => {
             teamName: true,
             faculty: true,
             semester: true,
+            captainName:true,
             projectId: true,
         },
     })
@@ -24,8 +27,6 @@ export const getDashboard = async () => {
                     id: team.projectId,
                 },
                 select: {
-                    // Select the project fields you want
-                    // For example: name, description, etc.
                     title: true,
                 },
             })
@@ -35,14 +36,94 @@ export const getDashboard = async () => {
                 teamName: team.teamName,
                 faculty: team.faculty,
                 semester: team.semester,
-                projectID: team.projectId,
+                captainName: team.captainName,
                 'project-name': project ? project.title : null,
             }
         })
     )
     return projects
     }
+//get status-pending by admin 
+export const getRequest= async() => {
+    // Check if the user ID exists in the Database
+    try{
+    return await prisma.team.findMany({
+        where:{
+            status: "pending",
+        }});
+    }catch(err:any){
+        if (err.code==='P2025')
+        {
+            throw Boom.notFound("No any forms submitted yet.")        
+        }
+        else{
+            throw err
+        }
+    }
+}
 
+//update status to verified by admin
+export const verify = async (id: number) => {
+    try {
+        const updatedTeam = await prisma.team.update({
+            where: { id:Number(id)},
+            data: {
+                status: "verified",
+            },
+        });
+        return updatedTeam;
+    } catch (error:any) {
+        
+        if (error.code==='P2025')
+        {
+            throw Boom.notFound("update error")
+        }
+        else{
+            throw error
+        }
+    }
+}
+
+//REJECT
+export const reject = async (id: number) => {
+    try {
+        const updatedTeam = await prisma.team.update({
+            where: { id:Number(id)},
+            data: {
+                status: "rejected",
+            },
+        });
+        return updatedTeam;
+    } catch (error:any) {
+        
+        if (error.code==='P2025')
+        {
+            throw Boom.notFound("update error")
+        }
+        else{
+            throw error
+        }
+    }
+}
+
+//display verified form
+export const getVerified= async() => {
+    try{
+    return await prisma.team.findMany({
+        where:{
+            status: "verified",
+        }});
+    }catch(err:any){
+        if (err.code==='P2025')
+        {
+            throw Boom.notFound("No any forms verified yet.")        
+        }
+        else{
+            throw err
+        }
+    }
+}
+  
 
 
 
@@ -50,17 +131,14 @@ export const getDashboard = async () => {
 
     
 
-
+//LOGIN 
 export async function login(userName: string, password: string ) {
     const user = await prisma.admin.findFirst({ where: { userName:userName} })
-    console.log('second');
     if (!user) {
-        console.log('hello');
         throw Boom.badRequest('Username or password is incorrect.')
     }
 
     const passwordMatch = password === user.password;
-    console.log(passwordMatch);
 
     if (!passwordMatch) {
         throw Boom.badRequest('Username or password is incorrect.')

@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 export const loginBodyDTO = z.object({
     userName: z.string({
-        required_error: 'email is required',
+        required_error: 'username is required',
     }),
     password: z.string({
         required_error: 'password is required',

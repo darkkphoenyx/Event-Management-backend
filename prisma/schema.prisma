@@ -21,8 +21,17 @@ model Team {
   status      String    @default("Pending")
   projectId   Int
   members     members[]
+  stall       stall     @relation(fields: [stallId], references: [id])
   bill        bill[]
   coupon      coupon[]
+  stallId     Int
+}
+
+model stall {
+  id      Int     @id @default(autoincrement())
+  stallId Int
+  isFree  Boolean @default(true)
+  Team    Team[]
 }
 
 model admin {
