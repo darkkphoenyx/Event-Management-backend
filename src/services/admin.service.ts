@@ -82,19 +82,27 @@ function generateOTP() {
 export const verify = async (id: number) => {
     try {
         const newOTP = generateOTP()
-        const updatedTeam = await prisma.team.update({
-            where: { id:Number(id)},
-            data: {
-                status: "verified",
-            },
-        });
-        await prisma.coupon.create({
-            data:{
-                teamId:id,
-                otp:newOTP
-            }
+        const qty = await prisma.members.count({
+            where:{teamId:id},
         })
-        return updatedTeam;
+
+        const [team,coupon] = await prisma.$transaction([
+             prisma.team.update({
+                where: { id:Number(id)},
+                data: {
+                    status: "verified",
+                },
+            }),
+             prisma.coupon.create({
+                data:{
+                    teamId:id,
+                    otp:newOTP,
+                    quantity: qty,
+                     
+                }
+            })
+        ])
+        
     } catch (error:any) {
         
         if (error.code==='P2025')
