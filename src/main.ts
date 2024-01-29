@@ -26,8 +26,9 @@ app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
         },
     })
 })
-//  app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-//      const error = buildError(err)
-//      res.status(error.code).json({ error })
-// })
+
+ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+     const error = buildError(err)
+     res.status(error.code).json({ error })
+})
 export default app

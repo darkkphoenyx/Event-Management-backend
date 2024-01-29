@@ -6,7 +6,12 @@ import { PrismaClient } from '@prisma/client'
 import Boom from '@hapi/boom'
 import { displayVerified } from '../controllers/admin.controller'
 const prisma = new PrismaClient()
+import cryptoRandomString from 'crypto-random-string'
+import { createAccessToken,createRefreshToken } from '../utils/token.util'
+import crypto from 'crypto'
 
+
+//GET all data for dashboard
 export const getDashboard = async () => {
     const teams = await prisma.team.findMany({
         select: {
@@ -14,13 +19,14 @@ export const getDashboard = async () => {
             teamName: true,
             faculty: true,
             semester: true,
+            captainName:true,
             projectId: true,
             email: true,
-            captainName: true,
             status: true,
             members: true,
         },
     })
+
 
     const projects = await Promise.all(
         teams.map(async (team) => {
@@ -29,8 +35,6 @@ export const getDashboard = async () => {
                     id: team.projectId,
                 },
                 select: {
-                    // Select the project fields you want
-                    // For example: name, description, etc.
                     title: true,
                 },
             })
@@ -40,69 +44,147 @@ export const getDashboard = async () => {
                 teamName: team.teamName,
                 faculty: team.faculty,
                 semester: team.semester,
-                projectID: team.projectId,
+                captainName: team.captainName,
                 'project-name': project ? project.title : null,
                 email: team.email,
                 status: team.status,
-                captainName: team.captainName,
                 member: team.members,
             }
         })
     )
     return projects
-}
-//get request from user
-export const getRequest = async () => {
+    }
+
+//GET request list
+export const getRequest= async() => {
     // Check if the user ID exists in the Database
-    try {
-        return await prisma.team.findMany({
-            where: {
-                status: 'pending',
-            },
-        })
-    } catch (err: any) {
-        if (err.code === 'P2025') {
-            throw Boom.notFound('No any form submitted yet.')
-        } else {
+    try{
+    return await prisma.team.findMany({
+        where:{
+            status: "pending",
+        }});
+    }catch(err:any){
+        if (err.code==='P2025')
+        {
+            throw Boom.notFound("No any forms submitted yet.")        
+        }
+        else{
             throw err
         }
     }
 }
 
+//OTP for token
+function generateOTP() {
+    const otpLength = 6;
+    const characters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+    let otp = '';
+
+    for (let i = 0; i < otpLength; i++) {
+        const randomIndex = crypto.randomInt(characters.length);
+        otp += characters.charAt(randomIndex);
+    }
+
+    return otp;
+}
+
 //update status to verified by admin
 export const verify = async (id: number) => {
     try {
-        const updatedTeam = await prisma.team.update({
-            where: { id: Number(id) },
-            data: {
-                status: 'verified',
-            },
+        const newOTP = generateOTP()
+        const qty = await prisma.members.count({
+            where:{teamId:id},
         })
-        return updatedTeam
-    } catch (error: any) {
-        // console.log(`Error updating team status: ${error.message}`);
-        // throw error; // Rethrow the error to handle it elsewhere if needed
-        if (error.code === 'P2025') {
-            throw Boom.notFound('update error')
-        } else {
+
+        const [team,coupon] = await prisma.$transaction([
+             prisma.team.update({
+                where: { id:Number(id)},
+                data: {
+                    status: "verified",
+                },
+            }),
+             prisma.coupon.create({
+                data:{
+                    teamId:id,
+                    otp:newOTP,
+                    quantity: qty,
+                     
+                }
+            })
+        ])
+        return team
+    } catch (error:any) {
+        
+        if (error.code==='P2025')
+        {
+            throw Boom.notFound("update error")
+        }
+        else{
             throw error
         }
     }
 }
 
-export const displayData = async () => {
+//REJECT
+export const reject = async (id: number) => {
     try {
-        const displayVerifiedTeam = await prisma.team.findMany({
-            where: {
-                status: 'verified',
+        const updatedTeam = await prisma.team.update({
+            where: { id:Number(id)},
+            data: {
+                status: "rejected",
             },
-        })
-        return displayVerifiedTeam
-    } catch (err: any) {
-        if (err.code === 'P2025') {
-            throw Boom.notFound('Could not find verified teams')
-        } else {
-            throw Error
+        });
+        return updatedTeam;
+    } catch (error:any) {
+        
+        if (error.code==='P2025')
+        {
+            throw Boom.notFound("update error")
+        }
+        else{
+            throw error
         }
     }
+}
+
+//display verified form
+export const getVerified= async() => {
+    try{
+    return await prisma.team.findMany({
+        where:{
+            status: "verified",
+        }});
+    }catch(err:any){
+        if (err.code==='P2025')
+        {
+            throw Boom.notFound("No any forms verified yet.")        
+        }
+        else{
+            throw err
+        }
+    }
+}
+  
+//LOGIN 
+export async function login(userName: string, password: string ) {
+    const user = await prisma.admin.findFirst({ where: { userName:userName} })
+    if (!user) {
+        throw Boom.badRequest('Username or password is incorrect.')
+    }
+
+    const passwordMatch = password === user.password;
+
+    if (!passwordMatch) {
+        throw Boom.badRequest('Username or password is incorrect.')
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+   
+    const accessToken = createAccessToken(userName)
+
+    const refreshToken = createRefreshToken(userName)
+
+    return { accessToken, refreshToken }
+    
 }

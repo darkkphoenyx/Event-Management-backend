@@ -3,6 +3,29 @@ import * as adminService from '../services/admin.service'
 import qrcode from 'qrcode'
 import nodemailer from 'nodemailer'
 import path from 'path'
+import {loginBodyDTO} from '../validator/loginvalidator'
+
+//LOGIN
+export const login =async(req:Request,res:Response,next:NextFunction
+  )=>{
+    try{
+    const { userName, password } = loginBodyDTO.parse(req.body)
+    const { accessToken, refreshToken } = await adminService.login(
+    userName,
+    password
+)
+res.cookie('refreshToken', refreshToken, {
+    httpOnly: true,
+}).json({ accessToken })
+
+} catch (error) {
+next(error)
+}
+}
+
+
+
+//Dashboard data
 export const dashboard = async (
     req: Request,
     res: Response,
@@ -17,8 +40,8 @@ export const dashboard = async (
     }
 }
 
-//get request status
-export const getStatus = async (
+//get status by admin 
+export const getRequest=async(
     req: Request,
     res: Response,
     next: NextFunction
@@ -129,15 +152,15 @@ export const sendVerification = async (
     }
 }
 
-export const displayVerified = async (
+export const displayDashboard = async (
     req: Request,
     res: Response,
     next: NextFunction
 ) => {
     try {
-        const displayData = await adminService.displayData()
+        const displayData = await adminService.getDashboard()
         res.status(201).json({
-            message: 'Here it is your list of verified Teams',
+            message: 'Here it is your list of all Teams',
             data: {
                 displayData,
             },
@@ -146,3 +169,36 @@ export const displayVerified = async (
         next(err)
     }
 }
+//REJECT
+export const rejectStatus=async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+)=>{
+    try{
+        const response = await adminService.reject(Number(req.params.id));
+        res.json(response)
+    }
+    catch(error){
+        next(error)
+    }
+    
+}
+
+
+//display status-verified to admin 
+export const displayVerified=async(
+    req: Request,
+    res: Response,
+    next: NextFunction
+)=> {
+    try {
+      const response = await adminService.getVerified();
+      console.log("Request is being verified by admin")
+      res.json(response)
+    } 
+    catch (error) {
+      next(error)
+    }
+}
+  
