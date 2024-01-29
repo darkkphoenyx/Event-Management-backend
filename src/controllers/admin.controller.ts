@@ -33,34 +33,6 @@ export const getStatus = async (
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 //send verification status
 async function generateQRCode(
     data: string | qrcode.QRCodeSegment[],
@@ -74,6 +46,7 @@ async function generateQRCode(
         throw error
     }
 }
+
 async function sendEmail(
     toEmail: string,
     subject: string,
