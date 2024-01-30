@@ -61,7 +61,7 @@ export const getRequest= async() => {
     try{
     return await prisma.team.findMany({
         where:{
-            status: "pending",
+            status: "Pending",
         }});
     }catch(err:any){
         if (err.code==='P2025')
@@ -101,7 +101,7 @@ export const verify = async (id: number) => {
              prisma.team.update({
                 where: { id:Number(id)},
                 data: {
-                    status: "verified",
+                    status: "Verified",
                 },
             }),
              prisma.coupon.create({
@@ -132,7 +132,7 @@ export const reject = async (id: number) => {
         const updatedTeam = await prisma.team.update({
             where: { id:Number(id)},
             data: {
-                status: "rejected",
+                status: "Rejected",
             },
         });
         return updatedTeam;
@@ -153,7 +153,7 @@ export const getVerified= async() => {
     try{
     return await prisma.team.findMany({
         where:{
-            status: "verified",
+            status: "Verified",
         }});
     }catch(err:any){
         if (err.code==='P2025')

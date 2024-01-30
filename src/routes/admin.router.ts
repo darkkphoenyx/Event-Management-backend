@@ -5,7 +5,7 @@ import { loginBodyDTO, loginSchema } from '../validator/loginvalidator'
 import { authenticateToken } from '../middleware/authenticate.middleware'
 const router = Router()
 
-
+//LOGIN
 router.post('/login',validate(loginSchema),adminController.login)
 
 //Display dashboard (all data)
@@ -15,10 +15,10 @@ router.get('/dashboard', authenticateToken,adminController.dashboard)
 router.get('/dashboard/status/pending',authenticateToken,adminController.getRequest)
 
 //Verification
-router.put('/dashboard/verify/:id',authenticateToken,adminController.sendVerification)
+router.patch('/dashboard/verify/:id',authenticateToken,adminController.sendVerification)
 
 //REJECT
-router.put('/dashboard/reject/:id',authenticateToken,adminController.rejectStatus)
+router.patch('/dashboard/reject/:id',authenticateToken,adminController.rejectStatus)
 
 //GET verified
 router.get('/dashboard/status/verified',authenticateToken,adminController.displayVerified)

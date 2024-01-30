@@ -19,8 +19,12 @@ import { z } from 'zod'
             captainName: z.string({
                 required_error: 'captainName is required',
             }),
-            members:z.array(z.string()),
+            members:z.array(z.string({
+                required_error: 'Member list is required',
+            })),
             
-            description: z.string().optional(),
+            description: z.string({
+                required_error: 'description is required',
+            })
         }),
     })

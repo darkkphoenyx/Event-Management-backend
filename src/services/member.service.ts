@@ -11,9 +11,25 @@ const createProject = async (title:string, description:string) => {
   return project;
 };
 
+
+//CREATE stall
+const createStall =async () => {
+    return prisma.stall.create({
+        data:{
+            stallId : 1,
+        },
+        select:
+        {
+            id:true,
+        }
+    })
+}
+
+
 export const createTeam = async (teamName:string, faculty:string, semester:number, captainName:string,email:string, projectName:string, description:string) => {
   try{
     const project = await createProject(projectName, description); // Create or find the project
+    const stall = await createStall()
     const team = await prisma.team.create({
       data: {
             teamName: teamName,
@@ -22,7 +38,7 @@ export const createTeam = async (teamName:string, faculty:string, semester:numbe
             captainName,
             email:email,
             projectId: project.id,
-            stallId: 1
+            stallId:stall.id
         },        
     });
     return team;

@@ -14,6 +14,11 @@ app.use(express.urlencoded({ extended: true }))
 const PORT = process.env.PORT || 3000
 
 
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`)
+})
+
+app.use('/members', memberRoute)
 app.use('/admin', adminRouter)
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
@@ -24,13 +29,6 @@ app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
         },
     })
 })
-
-
-app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`)
-})
-
-app.use('/members', memberRoute)
 
 app.use((err: any, req: Request, res: Response, next: NextFunction) => {
     const error = buildError(err)

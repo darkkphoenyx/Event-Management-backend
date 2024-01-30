@@ -48,7 +48,6 @@ export const getRequest=async(
 ) => {
     try {
         const response = await adminService.getRequest()
-        console.log('Request is being verified by admin')
         res.json(response)
     } catch (error) {
         next(error)
