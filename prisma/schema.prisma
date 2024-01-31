@@ -13,8 +13,6 @@ datasource db {
 model Team {
   id          Int       @id @default(autoincrement())
   teamName    String
-  faculty     String
-  semester    Int
   captainName String
   email       String
   projectID   project   @relation(fields: [projectId], references: [id])
@@ -25,6 +23,16 @@ model Team {
   bill        bill[]
   coupon      coupon[]
   stallId     Int
+  stream      stream    @relation(fields: [streamId], references: [id])
+  streamId    Int
+  teamPDF     String //stores pdf
+}
+
+model stream {
+  id     Int    @id @default(autoincrement())
+  level  String
+  option String
+  Team   Team[]
 }
 
 model stall {
@@ -41,17 +49,28 @@ model admin {
 }
 
 model project {
-  id          Int    @id @default(autoincrement())
-  title       String
-  description String
-  Team        Team[]
+  id           Int    @id @default(autoincrement())
+  title        String
+  description  String
+  Team         Team[]
+  projectPhoto String
 }
 
 model members {
-  id      Int    @id @default(autoincrement())
-  name    String
-  team_id Team   @relation(fields: [teamId], references: [id])
-  teamId  Int
+  id           Int          @id @default(autoincrement())
+  name         String
+  team_id      Team         @relation(fields: [teamId], references: [id])
+  teamId       Int
+  photo        String
+  memberIDcard String
+  attendance   attendance[]
+}
+
+model attendance {
+  id         Int      @id @default(autoincrement())
+  memberName members  @relation(fields: [membersId], references: [id])
+  membersId  Int
+  date       DateTime
 }
 
 model coupon {
