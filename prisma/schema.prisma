@@ -25,7 +25,7 @@ model Team {
   stallId     Int
   stream      stream    @relation(fields: [streamId], references: [id])
   streamId    Int
-  teamPDF     String //stores pdf
+  teamPDF     String? //stores pdf
 }
 
 model stream {
@@ -50,11 +50,11 @@ model admin {
 }
 
 model project {
-  id           Int    @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   title        String
   description  String
   Team         Team[]
-  projectPhoto String
+  projectPhoto String?
 }
 
 model members {
@@ -62,8 +62,8 @@ model members {
   name         String
   team_id      Team         @relation(fields: [teamId], references: [id])
   teamId       Int
-  memberphoto  String
-  memberIDcard String
+  memberphoto  String?
+  memberIDcard String?
   attendance   attendance[]
 }
 
