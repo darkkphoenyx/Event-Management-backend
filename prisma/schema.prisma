@@ -30,8 +30,9 @@ model Team {
 
 model stream {
   id     Int    @id @default(autoincrement())
-  level  String
-  option String
+  level  String //bachelors or +2
+  option String //csit or bca or bit or science or management or humaities
+  class  Int //semester or class(11/12)
   Team   Team[]
 }
 
@@ -61,7 +62,7 @@ model members {
   name         String
   team_id      Team         @relation(fields: [teamId], references: [id])
   teamId       Int
-  photo        String
+  memberphoto  String
   memberIDcard String
   attendance   attendance[]
 }
