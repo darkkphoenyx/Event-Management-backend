@@ -13,12 +13,12 @@ import crypto from 'crypto'
 
 //GET all data for dashboard
 export const getDashboard = async () => {
+
     const teams = await prisma.team.findMany({
         select: {
             id: true,
             teamName: true,
-            faculty: true,
-            semester: true,
+            streamId: true,
             captainName:true,
             projectId: true,
             email: true,
@@ -27,7 +27,7 @@ export const getDashboard = async () => {
         },
     })
 
-
+        
     const projects = await Promise.all(
         teams.map(async (team) => {
             const project = await prisma.project.findFirst({
@@ -39,13 +39,23 @@ export const getDashboard = async () => {
                 },
             })
 
+            const stream = await prisma.stream.findFirst({
+                where: {
+                    id:team.streamId
+                },
+                select:{
+                    option: true,
+                    level:true
+                }
+            })
+
             return {
                 id: team.id,
                 teamName: team.teamName,
-                faculty: team.faculty,
-                semester: team.semester,
                 captainName: team.captainName,
                 'project-name': project ? project.title : null,
+                'Stream': stream ? stream.option : null,
+                'Level': stream ? stream.level : null,
                 email: team.email,
                 status: team.status,
                 member: team.members,
@@ -92,26 +102,26 @@ function generateOTP() {
 //update status to verified by admin
 export const verify = async (id: number) => {
     try {
-        const newOTP = generateOTP()
+        //const newOTP = generateOTP()
         const qty = await prisma.members.count({
             where:{teamId:id},
         })
 
-        const [team,coupon] = await prisma.$transaction([
+        const [team] = await prisma.$transaction([
              prisma.team.update({
                 where: { id:Number(id)},
                 data: {
                     status: "Verified",
                 },
             }),
-             prisma.coupon.create({
-                data:{
-                    teamId:id,
-                    otp:newOTP,
-                    quantity: qty,
+            //  prisma.coupon.create({
+            //     data:{
+            //         teamId:id,
+            //         otp:newOTP,
+            //         quantity: qty,
                      
-                }
-            })
+            //     }
+            // })
         ])
         return team
     } catch (error:any) {

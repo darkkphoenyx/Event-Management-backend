@@ -2,15 +2,25 @@
 CREATE TABLE "Team" (
     "id" SERIAL NOT NULL,
     "teamName" TEXT NOT NULL,
-    "faculty" TEXT NOT NULL,
-    "semester" INTEGER NOT NULL,
     "captainName" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "status" TEXT NOT NULL DEFAULT 'Pending',
     "projectId" INTEGER NOT NULL,
     "stallId" INTEGER NOT NULL,
+    "streamId" INTEGER NOT NULL,
+    "teamPDF" TEXT,
 
     CONSTRAINT "Team_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "stream" (
+    "id" SERIAL NOT NULL,
+    "level" TEXT NOT NULL,
+    "option" TEXT NOT NULL,
+    "class" INTEGER NOT NULL,
+
+    CONSTRAINT "stream_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -36,6 +46,7 @@ CREATE TABLE "project" (
     "id" SERIAL NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
+    "projectPhoto" TEXT,
 
     CONSTRAINT "project_pkey" PRIMARY KEY ("id")
 );
@@ -45,8 +56,19 @@ CREATE TABLE "members" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "teamId" INTEGER NOT NULL,
+    "memberphoto" TEXT,
+    "memberIDcard" TEXT,
 
     CONSTRAINT "members_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "attendance" (
+    "id" SERIAL NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL,
+    "membersId" INTEGER NOT NULL,
+
+    CONSTRAINT "attendance_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -76,7 +98,13 @@ ALTER TABLE "Team" ADD CONSTRAINT "Team_projectId_fkey" FOREIGN KEY ("projectId"
 ALTER TABLE "Team" ADD CONSTRAINT "Team_stallId_fkey" FOREIGN KEY ("stallId") REFERENCES "stall"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
+ALTER TABLE "Team" ADD CONSTRAINT "Team_streamId_fkey" FOREIGN KEY ("streamId") REFERENCES "stream"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
 ALTER TABLE "members" ADD CONSTRAINT "members_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "attendance" ADD CONSTRAINT "attendance_membersId_fkey" FOREIGN KEY ("membersId") REFERENCES "members"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "coupon" ADD CONSTRAINT "coupon_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

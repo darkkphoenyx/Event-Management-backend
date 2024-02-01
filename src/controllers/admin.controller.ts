@@ -114,14 +114,12 @@ export const sendVerification = async (
 ) => {
     const id: number = parseInt(req.params.id, 10)
     const response = await adminService.verify(id)
-    const { teamName, captainName, status, faculty, semester } = response
+    const { teamName, captainName, status, streamId } = response
     const outputImagePath = path.join(__dirname, 'qrcode.png')
     const { email } = response
     const paragraph = ` 
      TeamName : ${teamName} \n 
      Dear ${captainName}\n
-     Faculty: ${faculty}\n
-     Semester : ${semester}\n
       I trust this email finds you well, We appreciate your continued participation in the Texas Expo.\n
       Your team has been verified successfully. 
       Attached below is a QR for the canteen token for all your team members.
@@ -136,7 +134,7 @@ export const sendVerification = async (
     `
     console.log(response)
 
-    const formedString = `${teamName} Led By ${captainName} is Authroized or Verified ${status} from ${faculty}, ${semester}`
+    const formedString = `${teamName} Led By ${captainName} is Authroized or Verified ${status}`
     try {
         await generateQRCode(formedString, outputImagePath)
         await sendEmail(
