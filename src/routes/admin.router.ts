@@ -3,6 +3,7 @@ import * as adminController from '../controllers/admin.controller'
 import { validate } from '../utils/validators'
 import { loginBodyDTO, loginSchema } from '../validator/loginvalidator'
 import { authenticateToken } from '../middleware/authenticate.middleware'
+import attRouter from './attendance.router'
 const router = Router()
 
 //LOGIN
@@ -22,7 +23,8 @@ router.patch('/dashboard/reject/:id',authenticateToken,adminController.rejectSta
 
 //GET verified
 router.get('/dashboard/status/verified',authenticateToken,adminController.displayVerified)
-
+//Attendance
+router.use('/attendance',attRouter)
 
 
 export default router

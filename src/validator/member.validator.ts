@@ -4,14 +4,17 @@ import { z } from 'zod'
             teamName: z.string({
                 required_error: 'teamName is required',
             }),
-            faculty: z.string({
-                required_error: 'faculty is required',
+            level: z.string({
+                required_error: 'level is required',
             }),
-            projectName: z.string({
-                required_error: 'projectName is required',
+            option: z.string({
+                required_error: 'option is required',
             }),
-            semester: z.number({
-                required_error: 'semester is required',
+            value: z.number({
+                required_error: 'value is required',
+            }),
+            projectName:z.string({
+                required_error:'projectName is required'
             }),
             email: z.string({
                 required_error: "email is required",
@@ -22,7 +25,6 @@ import { z } from 'zod'
             members:z.array(z.string({
                 required_error: 'Member list is required',
             })),
-            
             description: z.string({
                 required_error: 'description is required',
             })

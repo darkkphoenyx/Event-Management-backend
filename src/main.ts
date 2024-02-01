@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { NextFunction, Request, Response } from 'express'
-// import memberRouter from './routes/member.router'
+import memberRouter from './routes/member.router'
 import adminRouter from './routes/admin.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
