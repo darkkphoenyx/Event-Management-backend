@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { NextFunction, Request, Response } from 'express'
-// import memberRouter from './routes/member.router'
-// import adminRouter from './routes/admin.router'
+import memberRouter from './routes/member.router'
+import adminRouter from './routes/admin.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
 import memberRoute from './routes/member.router'
@@ -19,7 +19,7 @@ app.listen(PORT, () => {
 })
 
 app.use('/members', memberRoute)
-// app.use('/admin', adminRouter)
+app.use('/admin', adminRouter)
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
     res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
