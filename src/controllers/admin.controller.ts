@@ -124,15 +124,15 @@ export const sendVerification = async (
       Your team has been verified successfully. 
       Attached below is a QR for the canteen token for all your team members.
      
-     Stall No: 
+//      Stall No: 
 
       
-     Best regards,
+//      Best regards,
 
 
 
-    `
-    console.log(response)
+//     `
+//     console.log(response)
 
     const formedString = `${teamName} Led By ${captainName} is Authroized or Verified ${status}`
     try {

@@ -1,4 +1,5 @@
 
+import { number } from 'zod';
 import prisma from '../libs/prisma'
 
 const createProject = async (title:string, description:string) => {
@@ -25,16 +26,27 @@ const createStall =async () => {
     })
 }
 
+//CREATE stream
+const createStream = async (level:string,option:string,value:number) => {
+    return prisma.stream.create({
+        data:{
+            level,  
+            option,
+            value,
+        }
+    })
+}
 
-export const createTeam = async (teamName:string, faculty:string, semester:number, captainName:string,email:string, projectName:string, description:string) => {
+
+export const createTeam = async (teamName:string, projectName:string,level:string, option:string, value:number,captainName:string,email:string, description:string) => {
   try{
     const project = await createProject(projectName, description); // Create or find the project
     const stall = await createStall()
+    const stream = await createStream(level,option,value)
     const team = await prisma.team.create({
       data: {
             teamName: teamName,
-            faculty,
-            semester,
+            streamId:stream.id,
             captainName,
             email:email,
             projectId: project.id,

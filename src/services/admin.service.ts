@@ -1,10 +1,9 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+// /* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// /* eslint-disable @typescript-eslint/no-unused-vars */
+// /* eslint-disable @typescript-eslint/no-explicit-any */
+// /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { PrismaClient } from '@prisma/client'
 import Boom from '@hapi/boom'
-import { displayVerified } from '../controllers/admin.controller'
 const prisma = new PrismaClient()
 import cryptoRandomString from 'crypto-random-string'
 import { createAccessToken,createRefreshToken } from '../utils/token.util'

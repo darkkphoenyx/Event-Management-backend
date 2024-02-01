@@ -18,7 +18,7 @@ CREATE TABLE "stream" (
     "id" SERIAL NOT NULL,
     "level" TEXT NOT NULL,
     "option" TEXT NOT NULL,
-    "class" INTEGER NOT NULL,
+    "value" INTEGER NOT NULL,
 
     CONSTRAINT "stream_pkey" PRIMARY KEY ("id")
 );
