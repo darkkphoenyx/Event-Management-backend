@@ -5,9 +5,12 @@ import adminRouter from './routes/admin.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
 import memberRoute from './routes/member.router'
+import cors from 'cors'
+
 
 const app = express()
 
+app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
