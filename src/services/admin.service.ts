@@ -1,7 +1,4 @@
-// /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-// /* eslint-disable @typescript-eslint/no-unused-vars */
-// /* eslint-disable @typescript-eslint/no-explicit-any */
-// /* eslint-disable @typescript-eslint/no-unsafe-member-access */
+
 import { PrismaClient } from '@prisma/client'
 import Boom from '@hapi/boom'
 const prisma = new PrismaClient()
@@ -101,30 +98,36 @@ function generateOTP() {
 //update status to verified by admin
 export const verify = async (id: number) => {
     try {
-        //const newOTP = generateOTP()
+        const newOTP = generateOTP()
         const qty = await prisma.members.count({
             where:{teamId:id},
         })
 
-        const [team] = await prisma.$transaction([
+        let [team,coupon] = await prisma.$transaction([
              prisma.team.update({
                 where: { id:Number(id)},
                 data: {
                     status: "Verified",
                 },
             }),
-            //  prisma.coupon.create({
-            //     data:{
-            //         teamId:id,
-            //         otp:newOTP,
-            //         quantity: qty,
+             prisma.coupon.create({
+                data:{
+                    teamId:id,
+                    otp:newOTP,
+                    quantity: qty,
                      
-            //     }
-            // })
+                }
+            })
         ])
-        return team
-    } catch (error:any) {
         
+        return {
+            teamName:team.teamName, 
+            captainName: team.captainName,
+            email: team.email,
+            otp: coupon.otp
+        }
+    } catch (error:any) {
+
         if (error.code==='P2025')
         {
             throw Boom.notFound("update error")

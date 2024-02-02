@@ -114,7 +114,7 @@ export const sendVerification = async (
 ) => {
     const id: number = parseInt(req.params.id, 10)
     const response = await adminService.verify(id)
-    const { teamName, captainName, status, streamId } = response
+    const { teamName, captainName,otp} = response
     const outputImagePath = path.join(__dirname, 'qrcode.png')
     const { email } = response
     const paragraph = ` 
@@ -134,7 +134,7 @@ export const sendVerification = async (
 //     `
 //     console.log(response)
 
-    const formedString = `${teamName} Led By ${captainName} is Authroized or Verified ${status}`
+    const formedString = `localhost:3000/canteen/${otp}`
     try {
         await generateQRCode(formedString, outputImagePath)
         await sendEmail(

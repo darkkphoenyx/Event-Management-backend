@@ -2,6 +2,7 @@
 import express, { NextFunction, Request, Response } from 'express'
 import memberRouter from './routes/member.router'
 import adminRouter from './routes/admin.router'
+import canteenRouter from './routes/canteen.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
 import memberRoute from './routes/member.router'
@@ -21,8 +22,9 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
 })
 
-app.use('/members', memberRoute)
+app.use('/members', memberRouter)
 app.use('/admin', adminRouter)
+app.use('/canteen',canteenRouter)
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
     res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
