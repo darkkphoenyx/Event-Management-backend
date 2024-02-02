@@ -132,7 +132,7 @@ export const sendVerification = async (
 
 
 //     `
-//     console.log(response)
+    console.log(response)
 
     const formedString = `localhost:3000/canteen/${otp}`
     try {

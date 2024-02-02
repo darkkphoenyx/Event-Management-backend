@@ -2,7 +2,6 @@
 import { PrismaClient } from '@prisma/client'
 import Boom from '@hapi/boom'
 const prisma = new PrismaClient()
-import cryptoRandomString from 'crypto-random-string'
 import { createAccessToken,createRefreshToken } from '../utils/token.util'
 import crypto from 'crypto'
 
@@ -95,7 +94,7 @@ function generateOTP() {
     return otp;
 }
 
-//update status to verified by admin
+// update status to verified by admin
 export const verify = async (id: number) => {
     try {
         const newOTP = generateOTP()

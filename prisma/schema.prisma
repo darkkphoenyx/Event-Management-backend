@@ -64,13 +64,12 @@ model members {
   teamId       Int
   memberphoto  String?
   memberIDcard String?
-  attendance   attendance[]
+  
 }
 
 model attendance {
   id         Int      @id @default(autoincrement())
   date       DateTime
-  memberName members  @relation(fields: [membersId], references: [id])
   membersId  Int
 }
 
