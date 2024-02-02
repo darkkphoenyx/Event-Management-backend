@@ -5,12 +5,12 @@ import * as attendanceController from '../controllers/attendance.controller'
 const router = Router()
 
 //GET verified team 
-router.get('/attendance',attendanceController.getAttendance)
+router.get('/',attendanceController.getAttendance)
 
 //GET members by id
-router.get('/attendance/:id',attendanceController.getById)
+router.get('/:id',attendanceController.getById)
 
 //POST attendance
-router.post('/attendance/:id',attendanceController.postAttendance)
+router.post('/:id',attendanceController.postAttendance)
 
 export default router;

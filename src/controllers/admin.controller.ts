@@ -3,27 +3,27 @@ import * as adminService from '../services/admin.service'
 import qrcode from 'qrcode'
 import nodemailer from 'nodemailer'
 import path from 'path'
-import {loginBodyDTO} from '../validator/loginvalidator'
+import { loginBodyDTO } from '../validator/loginvalidator'
 
 //LOGIN
-export const login =async(req:Request,res:Response,next:NextFunction
-  )=>{
-    try{
-    const { userName, password } = loginBodyDTO.parse(req.body)
-    const { accessToken, refreshToken } = await adminService.login(
-    userName,
-    password
-)
-res.cookie('refreshToken', refreshToken, {
-    httpOnly: true,
-}).json({ accessToken })
-
-} catch (error) {
-next(error)
+export const login = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const { userName, password } = loginBodyDTO.parse(req.body)
+        const { accessToken, refreshToken } = await adminService.login(
+            userName,
+            password
+        )
+        res.cookie('refreshToken', refreshToken, {
+            httpOnly: true,
+        }).json({ accessToken })
+    } catch (error) {
+        next(error)
+    }
 }
-}
-
-
 
 //Dashboard data
 export const dashboard = async (
@@ -40,8 +40,8 @@ export const dashboard = async (
     }
 }
 
-//get status by admin 
-export const getRequest=async(
+//get status by admin
+export const getRequest = async (
     req: Request,
     res: Response,
     next: NextFunction
@@ -53,7 +53,6 @@ export const getRequest=async(
         next(error)
     }
 }
-
 
 //send verification status
 async function generateQRCode(
@@ -114,7 +113,7 @@ export const sendVerification = async (
 ) => {
     const id: number = parseInt(req.params.id, 10)
     const response = await adminService.verify(id)
-    const { teamName, captainName,otp} = response
+    const { teamName, captainName, otp, } = response
     const outputImagePath = path.join(__dirname, 'qrcode.png')
     const { email } = response
     const paragraph = ` 
@@ -137,13 +136,8 @@ export const sendVerification = async (
     const formedString = `localhost:3000/canteen/${otp}`
     try {
         await generateQRCode(formedString, outputImagePath)
-        await sendEmail(
-            email,
-            'Team Verified',
-            paragraph,
-            outputImagePath
-        )
-        res.send('Email sent SuccessFully!')
+        await sendEmail(email, 'Team Verified', paragraph, outputImagePath)
+        res.json(response)
     } catch (err) {
         res.status(500).send('Error sending email')
     }
@@ -167,35 +161,30 @@ export const displayDashboard = async (
     }
 }
 //REJECT
-export const rejectStatus=async(
+export const rejectStatus = async (
     req: Request,
     res: Response,
     next: NextFunction
-)=>{
-    try{
-        const response = await adminService.reject(Number(req.params.id));
+) => {
+    try {
+        const response = await adminService.reject(Number(req.params.id))
         res.json(response)
-    }
-    catch(error){
+    } catch (error) {
         next(error)
     }
-    
 }
 
-
-//display status-verified to admin 
-export const displayVerified=async(
+//display status-verified to admin
+export const displayVerified = async (
     req: Request,
     res: Response,
     next: NextFunction
-)=> {
+) => {
     try {
-      const response = await adminService.getVerified();
-      console.log("Request is being verified by admin")
-      res.json(response)
-    } 
-    catch (error) {
-      next(error)
+        const response = await adminService.getVerified()
+        console.log('Request is being verified by admin')
+        res.json(response)
+    } catch (error) {
+        next(error)
     }
 }
-  

@@ -41,7 +41,7 @@ export const postAttendance=async(
     next:NextFunction
 )=>{
     try{
-        const response = await attendanceService.memeberAttendance(req.body)
+        const response = await attendanceService.memberAttendance(Number(req.params.id))
         const message = {
                         message: 'Attendance done successfully.',
                         response:response

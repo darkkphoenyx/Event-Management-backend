@@ -127,12 +127,23 @@ export const verify = async (id: number) => {
                 }
             })
         ])
+
+        const members = await prisma.members.findMany({
+            where:{
+                teamId:id,
+            },
+            select:{
+                id:true,
+                name: true,
+            }
+        })
         
         return {
             teamName:team.teamName, 
             captainName: team.captainName,
             email: team.email,
-            otp: coupon.otp
+            otp: coupon.otp,
+            members,
         }
     } catch (error:any) {
 
