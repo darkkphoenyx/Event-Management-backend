@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { Request, Response, NextFunction } from 'express'
+import HttpStatusCode from 'http-status-codes'
 import * as attendanceService from '../services/attendance.service'
 
 
@@ -31,3 +33,23 @@ export const getById=async(
         next(err)
     }
 }
+
+//POST attendance
+export const postAttendance=async(
+    req:Request,
+    res:Response,
+    next:NextFunction
+)=>{
+    try{
+        const response = await attendanceService.memeberAttendance(req.body)
+        const message = {
+                        message: 'Attendance done successfully.',
+                        response:response
+              }        
+              return res.status(HttpStatusCode.CREATED).json(message)
+    }catch(err){
+        next(err)
+    }
+}
+
+

@@ -6,9 +6,9 @@ import express, { NextFunction, Request, Response } from 'express'
 // import adminRouter from './routes/admin.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
-import memberRoute from './routes/member.router'
+// import memberRoute from './routes/member.router'
 import attendanceRouter from './routes/attendance.router' 
-import adminRouter from './routes/admin.router'
+// import adminRouter from './routes/admin.router'
 
 const app = express()
 
@@ -22,9 +22,9 @@ app.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`)
 })
 
-app.use('/members', memberRoute)
-app.use('/admin', adminRouter)
-app.use('/attendance',attendanceRouter)
+// app.use('/members', memberRoute)
+// app.use('/admin', adminRouter)
+app.use('/att',attendanceRouter)
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
     res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
