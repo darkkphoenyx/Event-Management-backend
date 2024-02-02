@@ -13,8 +13,10 @@ export const checkStatus = async (otp: any)=>{
     if(newCoupon.is_valid)
     {
         return {"Validity": "Verified",
-            "Quantity" :newCoupon.quantity}
+            "Quantity" :newCoupon.quantity,
+        "htmlContent": `<h1>${newCoupon.quantity} ota token dinu hai</h1>`}
     }
+    
 }catch(err: any)
 {
     if (err.code === 'P2025') throw Boom.notFound("Not found")
