@@ -26,6 +26,23 @@ const createStall =async () => {
     })
 }
 
+//STORE pictures
+export const storePicture = async(pictureBuffer: Buffer)=>{
+
+    try { 
+        // Store the picture in the database using Prisma
+        const savedPicture = await prisma.picture.create({
+          data: {
+            data: pictureBuffer,
+          },
+        });
+    
+        return savedPicture
+      } catch (error) {
+        throw error
+      }
+}
+
 //CREATE stream
 const createStream = async (level:string,option:string,value:number) => {
     return prisma.stream.create({

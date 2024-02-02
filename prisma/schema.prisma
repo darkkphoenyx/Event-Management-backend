@@ -58,20 +58,18 @@ model project {
 }
 
 model members {
-  id           Int          @id @default(autoincrement())
+  id           Int     @id @default(autoincrement())
   name         String
-  team_id      Team         @relation(fields: [teamId], references: [id])
+  team_id      Team    @relation(fields: [teamId], references: [id])
   teamId       Int
   memberphoto  String?
   memberIDcard String?
-  attendance   attendance[]
 }
 
 model attendance {
-  id         Int      @id @default(autoincrement())
-  date       DateTime
-  memberName members  @relation(fields: [membersId], references: [id])
-  membersId  Int
+  id        Int      @id @default(autoincrement())
+  date      DateTime
+  membersId Int
 }
 
 model coupon {
@@ -88,4 +86,9 @@ model bill {
   team_Id    Team @relation(fields: [teamId], references: [id])
   tokenValue Int  @default(50)
   teamId     Int
+}
+
+model picture {
+  id   Int   @id @default(autoincrement())
+  data Bytes
 }
