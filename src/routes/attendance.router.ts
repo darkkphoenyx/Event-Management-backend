@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import * as attendanceController from '../controllers/attendance.controller'
-// import { authenticateToken } from '../middleware/authenticate.middleware'
+import { authenticateToken } from '../middleware/authenticate.middleware'
 const router = Router()
 
 //GET verified team 
-router.get('/attendance',attendanceController.getAttendance)
+router.get('/attendance',authenticateToken,attendanceController.getAttendance)
 
 //GET members by id
-router.get('/attendance/:id',attendanceController.getById)
+router.get('/attendance/:id',authenticateToken,attendanceController.getById)
 
-router.get('/stall')
 export default router;

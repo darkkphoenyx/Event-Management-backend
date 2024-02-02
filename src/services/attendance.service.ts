@@ -43,7 +43,7 @@ export const getId = async (id: number) => {
         
         if (error.code==='P2025')
         {
-            throw Boom.notFound("update error")
+            throw Boom.notFound("error getting member info")
         }
         else{
             throw error

@@ -7,7 +7,7 @@ import express, { NextFunction, Request, Response } from 'express'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
 import memberRoute from './routes/member.router'
-import attrouter from './routes/attendance.router' 
+import attendanceRouter from './routes/attendance.router' 
 import adminRouter from './routes/admin.router'
 
 const app = express()
@@ -24,7 +24,7 @@ app.listen(PORT, () => {
 
 app.use('/members', memberRoute)
 app.use('/admin', adminRouter)
-app.use('/att',attrouter)
+app.use('/attendance',attendanceRouter)
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
     res.status(HttpStatus.METHOD_NOT_ALLOWED).json({
