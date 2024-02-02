@@ -99,6 +99,14 @@ function generateOTP() {
 export const verify = async (id: number) => {
     try {
         const newOTP = generateOTP()
+        const newStall = await prisma.stall.findFirst({
+            where:{
+                isFree: true,
+            }
+        })
+
+        const newStallId = newStall?.stallId
+        
         const qty = await prisma.members.count({
             where:{teamId:id},
         })
@@ -108,6 +116,7 @@ export const verify = async (id: number) => {
                 where: { id:Number(id)},
                 data: {
                     status: "Verified",
+                    stallId: newStallId,
                 },
             }),
              prisma.coupon.create({
