@@ -8,6 +8,7 @@ import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
 import memberRoute from './routes/member.router'
 import attrouter from './routes/attendance.router' 
+import adminRouter from './routes/admin.router'
 
 const app = express()
 
