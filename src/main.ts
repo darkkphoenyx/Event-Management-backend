@@ -1,10 +1,13 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import express, { NextFunction, Request, Response } from 'express'
 // import memberRouter from './routes/member.router'
-import adminRouter from './routes/admin.router'
+// import adminRouter from './routes/admin.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
 import memberRoute from './routes/member.router'
+import attrouter from './routes/attendance.router' 
 
 const app = express()
 
@@ -20,6 +23,7 @@ app.listen(PORT, () => {
 
 app.use('/members', memberRoute)
 app.use('/admin', adminRouter)
+app.use('/att',attrouter)
 
 app.use(function METHOD_NOT_ALLOWED(req: Request, res: Response) {
     res.status(HttpStatus.METHOD_NOT_ALLOWED).json({

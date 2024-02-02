@@ -1,7 +1,8 @@
+// /* eslint-disable @typescript-eslint/no-misused-promises */
 import { Router } from 'express'
 import * as adminController from '../controllers/admin.controller'
 import { validate } from '../utils/validators'
-import { loginBodyDTO, loginSchema } from '../validator/loginvalidator'
+import { loginSchema } from '../validator/loginvalidator'
 import { authenticateToken } from '../middleware/authenticate.middleware'
 const router = Router()
 
@@ -22,6 +23,7 @@ router.patch('/dashboard/reject/:id',authenticateToken,adminController.rejectSta
 
 //GET verified
 router.get('/dashboard/status/verified',authenticateToken,adminController.displayVerified)
+
 
 
 
