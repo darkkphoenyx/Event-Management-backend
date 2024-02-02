@@ -5,7 +5,6 @@ import adminRouter from './routes/admin.router'
 import canteenRouter from './routes/canteen.router'
 import buildError from './utils/build-errors'
 import HttpStatus from 'http-status-codes'
-import memberRoute from './routes/member.router'
 import cors from 'cors'
 
 
