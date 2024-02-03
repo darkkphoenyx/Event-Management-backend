@@ -25,6 +25,10 @@ router.patch('/dashboard/reject/:id',authenticateToken,adminController.rejectSta
 router.get('/dashboard/status/verified',authenticateToken,adminController.displayVerified)
 //Attendance
 router.use('/attendance',attRouter)
+
+//check validity of token
+router.post('/token/auth', authenticateToken)
+
 export default router
 
 

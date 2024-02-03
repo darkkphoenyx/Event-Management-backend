@@ -91,6 +91,14 @@ CREATE TABLE "bill" (
     CONSTRAINT "bill_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "picture" (
+    "id" SERIAL NOT NULL,
+    "url" TEXT NOT NULL,
+
+    CONSTRAINT "picture_pkey" PRIMARY KEY ("id")
+);
+
 -- AddForeignKey
 ALTER TABLE "Team" ADD CONSTRAINT "Team_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "project"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
@@ -102,9 +110,6 @@ ALTER TABLE "Team" ADD CONSTRAINT "Team_streamId_fkey" FOREIGN KEY ("streamId") 
 
 -- AddForeignKey
 ALTER TABLE "members" ADD CONSTRAINT "members_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "attendance" ADD CONSTRAINT "attendance_membersId_fkey" FOREIGN KEY ("membersId") REFERENCES "members"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "coupon" ADD CONSTRAINT "coupon_teamId_fkey" FOREIGN KEY ("teamId") REFERENCES "Team"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
