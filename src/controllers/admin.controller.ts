@@ -188,3 +188,18 @@ export const displayVerified = async (
         next(error)
     }
 }
+
+
+//GET member image by ID
+export const getMemberImage =async  (
+    req: Request,
+    res: Response,
+    next: NextFunction
+) => {
+    try {
+        const imageUrl = await adminService.memberImage(parseInt(req.params.id))
+        res.json(imageUrl)
+    } catch (error) {
+        next(error)
+    }
+}

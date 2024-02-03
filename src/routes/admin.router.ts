@@ -29,6 +29,9 @@ router.use('/attendance',attRouter)
 //check validity of token
 router.post('/token/auth', authenticateToken)
 
+//Get picture
+router.get('/member/images/:id',authenticateToken)
+
 export default router
 
 

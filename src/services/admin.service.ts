@@ -219,3 +219,26 @@ export async function login(userName: string, password: string ) {
     return { accessToken, refreshToken }
     
 }
+
+
+export const memberImage = async(id : number)=>{
+    try{
+        return await prisma.members.findFirstOrThrow({
+            where:{
+                id: id
+            },
+        select:
+        {
+            memberphoto: true,
+        }
+    });
+        }catch(err:any){
+            if (err.code==='P2025')
+            {
+                throw Boom.notFound("Member not found")        
+            }
+            else{
+                throw err
+            }
+        }
+}
