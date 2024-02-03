@@ -70,6 +70,7 @@ model attendance {
   id        Int      @id @default(autoincrement())
   date      DateTime
   membersId Int
+  pdfPath String?
 }
 
 model coupon {

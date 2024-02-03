@@ -67,6 +67,7 @@ CREATE TABLE "attendance" (
     "id" SERIAL NOT NULL,
     "date" TIMESTAMP(3) NOT NULL,
     "membersId" INTEGER NOT NULL,
+    "pdfPath" TEXT,
 
     CONSTRAINT "attendance_pkey" PRIMARY KEY ("id")
 );
@@ -89,14 +90,6 @@ CREATE TABLE "bill" (
     "teamId" INTEGER NOT NULL,
 
     CONSTRAINT "bill_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "picture" (
-    "id" SERIAL NOT NULL,
-    "url" TEXT NOT NULL,
-
-    CONSTRAINT "picture_pkey" PRIMARY KEY ("id")
 );
 
 -- AddForeignKey
