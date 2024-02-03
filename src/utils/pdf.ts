@@ -5,6 +5,10 @@ import PDFDocument from 'pdfkit'
 // import fs from 'fs';
 import fs from 'fs'
 import nodemailer from 'nodemailer'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
+
 export const generateIDCardPDF = async (
     members: any,
     TeamName: any,
@@ -17,7 +21,7 @@ export const generateIDCardPDF = async (
             size: [400, 600],
         })
 
-        const pdfPath = `${member.name}_IDCard.pdf`
+        const pdfPath = `./pdfs/${member.name}_IDCard.pdf`
         pdfPaths.push(pdfPath)
 
         const stream = fs.createWriteStream(pdfPath)
@@ -59,6 +63,12 @@ export const generateIDCardPDF = async (
         doc.moveDown()
 
         doc.end()
+
+        // Save the PDF path to the database
+        await prisma.members.update({
+            where: { id: member.id },
+            data: { pdfPath },
+        })
     }
 
     return pdfPaths

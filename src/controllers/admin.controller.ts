@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Request, Response, NextFunction } from 'express'
 import * as adminService from '../services/admin.service'
@@ -63,7 +65,11 @@ export const sendVerification = async (
     const id: number = parseInt(req.params.id, 10)
     const response = await adminService.verify(id)
     const { teamName, captainName, otp } = response
-    const outputImagePath = path.join(__dirname, 'qrcode.png')
+
+    const parentFolder = 'F:\\Event-Management-backend-refine\\src\\controllers'
+    const subfolder = 'qr'
+    const filename = 'qrcode.png'
+    const fullPath = path.join(parentFolder, subfolder, filename)
     const { email } = response
     //Destruct ani spread use gareko
     const { members } = response
@@ -76,6 +82,7 @@ export const sendVerification = async (
     const { team2 } = response
     const [...tea] = team2
     console.log(tea[0].teamName)
+    //aba qr ko lagi
 
     // console.log([...rest])
     // const sampleMemebers = [...rest]
@@ -99,8 +106,8 @@ export const sendVerification = async (
 
     const formedString = `localhost:3000/canteen/${otp}`
     try {
-        await generateQRCode(formedString, outputImagePath)
-        await sendEmail(email, 'Team Verified', paragraph, outputImagePath)
+        await generateQRCode(formedString, fullPath)
+        await sendEmail(email, 'Team Verified', paragraph, fullPath)
         const sampleMember = [...rest]
         console.log(sampleMember)
         const ProjectName = proj[0].title
