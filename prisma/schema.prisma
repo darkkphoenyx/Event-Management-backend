@@ -87,8 +87,3 @@ model bill {
   tokenValue Int  @default(50)
   teamId     Int
 }
-
-model picture {
-  id   Int   @id @default(autoincrement())
-  data Bytes
-}

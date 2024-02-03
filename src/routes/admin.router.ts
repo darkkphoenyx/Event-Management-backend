@@ -26,6 +26,8 @@ router.get('/dashboard/status/verified',authenticateToken,adminController.displa
 //Attendance
 router.use('/attendance',attRouter)
 
+//check validity of token
+router.post('/token/auth', authenticateToken)
 
 export default router
 

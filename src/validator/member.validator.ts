@@ -27,6 +27,6 @@ import { z } from 'zod'
             })),
             description: z.string({
                 required_error: 'description is required',
-            })
+            }),
         }),
     })
