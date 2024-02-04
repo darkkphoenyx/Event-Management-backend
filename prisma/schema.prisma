@@ -63,13 +63,14 @@ model members {
   team_id      Team    @relation(fields: [teamId], references: [id])
   teamId       Int
   memberphoto  String?
-  memberIDcard String?
+  pdfPath String?
 }
 
 model attendance {
   id        Int      @id @default(autoincrement())
   date      DateTime
   membersId Int
+ 
 }
 
 model coupon {
