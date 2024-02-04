@@ -9,7 +9,7 @@
         "format": "prettier --write .",
         "lint-fix": "eslint --ignore-path .eslintignore . --fix",
         "deploy-migrate": "npx prisma migrate deploy && npm run start",
-        "deploy": "npx prisma migrate deploy --omit=dev && npm run start"
+        "deploy": "npx prisma migrate dev && npm run start"
     },
     "author": "",
     "license": "ISC",
