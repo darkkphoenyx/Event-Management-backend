@@ -90,15 +90,14 @@ export const createTeam = async (teamName:string, projectName:string,level:strin
 export const createMembers = async (teamId:number, members:any) => {
     try{
         const createdMembers = await Promise.all(
-            members.map(async (memberName: any) => {
-                const member = await prisma.members.create({
+            members.map(async (member: any) => {
+                return await prisma.members.create({
                     data: {
-                        name: memberName,
+                        name: member.name,
                         teamId,
-                      
+                        memberphoto:member.imgUrl
                     },
                 });
-                return member;
             })
         );
         return createdMembers;
