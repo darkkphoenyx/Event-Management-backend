@@ -20,8 +20,10 @@ export const generateIDCardPDF = async (
         const doc = new PDFDocument({
             size: [400, 600],
         })
-
-        const pdfPath = `./src/utils/pdfs/${member.name}_IDCard.pdf`
+        doc.rect(10, 10, doc.page.width - 20, doc.page.height - 20).stroke(
+            '#000000'
+        )
+        const pdfPath = `./pdfs/${member.name}_IDCard.pdf`
         pdfPaths.push(pdfPath)
 
         const stream = fs.createWriteStream(pdfPath)
@@ -61,11 +63,21 @@ export const generateIDCardPDF = async (
         // const texas = `src/utils/texas.png`;
         // doc.image(texas, xCoordinate, doc.y, { width: imageWidth });
         doc.moveDown()
+        const imagePath = './src/utils/Texas-logo.png' // Replace with the actual path to your image
+        const imageWidth = 300 // Adjust the width of the image as needed
+        const imageHeight = 50 // Adjust the height of the image as needed
+        const imageXCoordinate = (doc.page.width - imageWidth) / 2
+        const imageYCoordinate = doc.page.height - 100
+
+        doc.image(imagePath, imageXCoordinate, imageYCoordinate, {
+            width: imageWidth,
+            height: imageHeight,
+        })
 
         doc.end()
 
         // Save the PDF path to the database
-        await prisma.attendance.update({
+        await prisma.members.update({
             where: { id: member.id },
             data: { pdfPath },
         })
