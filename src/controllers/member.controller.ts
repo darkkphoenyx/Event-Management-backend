@@ -22,7 +22,7 @@ export const upload =async (
         {
         const uploadPictureURL =await memberService.imgUrl(file, fileName)
         console.log(uploadPictureURL)
-        res.send(uploadPictureURL)
+        res.json({"url":uploadPictureURL})
         }
     }catch(err)
     {
